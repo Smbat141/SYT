@@ -10,7 +10,8 @@ mouse = Controller()
 class Tracker:
     def track(self):
         start_time = datetime.now()
-        if start_time.minute % 10 < 8:
+        number_list = [6, 7, 8]
+        if start_time.minute % 10 < random.choice(number_list):
             pyautogui.press('space')
             threading.Timer(0000000.1, self.track).start()
         else:
