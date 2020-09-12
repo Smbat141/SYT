@@ -4,46 +4,34 @@
 # (56, 818)
 # (537, 778)
 
-# phpstorm = '/home/home/.local/bin/phpstorm'
 
-# def on_move(x, y):
-#     print ("Mouse moved",x, y, sep="*")
-#
-# def on_click(x, y, button, pressed):
-#     print ("Mouse clicked")
-#
-# def on_scroll(x, y, dx, dy):
-#     print ("Mouse scrolled")
-#
-# #subprocess.call([phpstorm])
-# with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listener:
-# 	listener.join()
-
+import threading
+import pyautogui
+import random
+from pynput.mouse import Listener, Button, Controller
 from tracker import Tracker
 
 x = Tracker()
 x.start()
 
-# import threading
-# import pyautogui
-# import random
-#
-# from pynput.mouse import Listener, Button, Controller
-#
-#
 # mouse = Controller()
-#
-# mouse.position = (537, 778)
+# mouse.position = (588, 872)
 # mouse.press(Button.left)
 # mouse.release(Button.left)
 #
+# #
 # def test():
-#     pyautogui.keyDown('ctrl')
+#     mouse.position = (700, 450)
+#     mouse.press(Button.left)
+#     mouse.release(Button.left)
+#     scroll_steps = random.randint(-100, 50)
+#     print(scroll_steps)
+#     mouse.scroll(0, scroll_steps)
 #
-#     for i in range(0,random.randrange(1, 8)):
-#         pyautogui.press('tab')
-#
-#     pyautogui.keyUp('ctrl')
 #
 # threading.Timer(2, test).start()
+# import pandas as pd
+# import os
+# data_file = pd.read_csv("data.csv", encoding = "ISO-8859-1")
+# print(data_file)
 
