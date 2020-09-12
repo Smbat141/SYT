@@ -16,7 +16,7 @@ def on_click(x, y, button, pressed):
 
 
 def on_scroll(x, y, dx, dy):
-    pass
+    print ("Mouse scrolled")
 
 
 # subprocess.call([phpstorm])
