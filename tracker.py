@@ -16,7 +16,7 @@ class Tracker:
 
         # select random time for press space
         space_pressing_time = random.choice(
-            [0.1, 1, 0.9, 1.3, 0.9, 0.9, 0.1, 0.2, 0.9, 0.3, 0.4, 0.9, 0.5, 0.9, 0.8, 1.3])
+            [0.1,  0.9,  0.9, 0.9, 0.1, 0.2, 0.9, 0.3, 0.4, 0.9, 0.5, 0.9, 0.8,])
 
         if start_time.minute % 10 < self.random_number:
             pyautogui.press('space')
