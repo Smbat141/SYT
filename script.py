@@ -8,13 +8,20 @@
 import threading
 import pyautogui
 import random
+import time
+import pause
+from datetime import datetime, timedelta
 from pynput.mouse import Listener, Button, Controller
 
 from tracker import Tracker
 
 x = Tracker()
 x.start()
+# y = 10 - (datetime.now().minute % 10)
 
+# print(x.timestamp(), ' coming 10')
+# print(datetime.now().timestamp(), ' now')
+# print(int(x.timestamp()) - int(datetime.now().timestamp()))
 # mouse = Controller()
 # mouse.position = (588, 872)
 # mouse.press(Button.left)

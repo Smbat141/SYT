@@ -2,13 +2,14 @@ import threading
 import pyautogui
 import random
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pynput.mouse import Listener, Button, Controller
 
 mouse = Controller()
 
 
 class Tracker:
+
     def __init__(self):
         self.random_number = self.get_random_number()
 
@@ -23,35 +24,53 @@ class Tracker:
             pyautogui.press('space')
             threading.Timer(space_pressing_time, self.track).start()
         else:
-            start_after_this_minutes = (10 - self.random_number) * 60
-            self.wait_and_restart(start_after_this_minutes)
+            minutes_left = 10 - (start_time.minute % 10)
 
-    def press_button(self, a, b):
-        if a == 537:
-            time.sleep(1)
-            self.change_tab()
-            time.sleep(1)
-            self.mouse_click(700, 450)
-            time.sleep(1)
-            self.random_mouse_scroll()
-            time.sleep(1)
-            self.mouse_click(a, b)
-            time.sleep(1)
-            self.track()
+            restart_datetime = datetime.now() + timedelta(minutes=minutes_left, seconds=0, microseconds=0)
 
-    def start(self):
+            rounded_restart_datetime = restart_datetime - timedelta(minutes=restart_datetime.minute % 10,
+                                                                    seconds=restart_datetime.second,
+                                                                    microseconds=restart_datetime.microsecond)
+
+            start_after_this_seconds = rounded_restart_datetime.timestamp() - datetime.now().timestamp()
+
+            self.wait_and_restart(start_after_this_seconds)
+
+    def prepare_for_track(self):
+        time.sleep(1)
+        self.change_tab()
+        time.sleep(1)
+        self.mouse_click(700, 450)
+        time.sleep(1)
+        self.random_mouse_scroll()
+        time.sleep(1)
+        self.open_git_window()
+        time.sleep(1)
+        self.track()
+
+    def start(self, time_for_tracer_sleep=False):
+
+        # threading.Timer(20, self.turn_off)
+
+        # if time_for_tracer_sleep:
+        #     print(57)
+        #     threading.Timer(time_for_tracer_sleep * 60, self.turn_off)
+
         self.mouse_click(642, 868)
         time.sleep(1)
-        pyautogui.hotkey('shift', 'esc')
+        self.mouse_click(700, 450)
         time.sleep(1)
-        self.mouse_click(56, 818)
+        self.open_git_window()
         time.sleep(1)
-        self.press_button(537, 778)
+        self.prepare_for_track()
 
     def wait_and_restart(self, seconds):
         time.sleep(seconds)
         self.random_number = self.get_random_number()
-        self.press_button(537, 778)
+        self.prepare_for_track()
+
+    def turn_off(self):
+        print('turn off')
 
     @staticmethod
     def get_random_number():
@@ -68,7 +87,7 @@ class Tracker:
 
     @staticmethod
     def random_mouse_scroll():
-        scroll_steps = random.randint(-100, 50)
+        scroll_steps = random.randint(-70, 70)
         mouse.scroll(0, scroll_steps)
 
     @staticmethod
@@ -76,6 +95,19 @@ class Tracker:
         print(f'start in {str(datetime.now())}')
         # select random tab
         pyautogui.keyDown('ctrl')
-        for i in range(0, random.randrange(1, 8)):
+        for i in range(0, random.choice([8, 7, 6, 5, 7, 3, 4, 6, 8])):
             pyautogui.press('tab')
         pyautogui.keyUp('ctrl')
+
+    @staticmethod
+    def open_git_window():
+        # open git window
+        pyautogui.hotkey('alt', '9')
+        time.sleep(1)
+        # select input for typing
+        pyautogui.hotkey('ctrl', 'l')
+
+    @staticmethod
+    def open_project_window():
+        # open project window
+        pyautogui.hotkey('alt', '1')
