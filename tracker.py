@@ -60,8 +60,6 @@ class Tracker:
         time.sleep(1)
         self.mouse_click(700, 450)
         time.sleep(1)
-        self.open_git_window()
-        time.sleep(1)
         self.prepare_for_track()
 
     def wait_and_restart(self, seconds):
