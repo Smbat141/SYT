@@ -2,6 +2,8 @@ import threading
 import pyautogui
 import random
 import time
+import os
+import subprocess
 from datetime import datetime, timedelta
 from pynput.mouse import Listener, Button, Controller
 
@@ -50,13 +52,10 @@ class Tracker:
 
     def start(self, time_for_tracer_sleep=False):
 
-        # threading.Timer(20, self.turn_off)
+        if time_for_tracer_sleep:
+            threading.Timer(time_for_tracer_sleep * 60, self.turn_off).start()
 
-        # if time_for_tracer_sleep:
-        #     print(57)
-        #     threading.Timer(time_for_tracer_sleep * 60, self.turn_off)
-
-        self.mouse_click(642, 868)
+        self.open_php_storm()
         time.sleep(1)
         self.mouse_click(700, 450)
         time.sleep(1)
@@ -65,10 +64,16 @@ class Tracker:
     def wait_and_restart(self, seconds):
         time.sleep(seconds)
         self.random_number = self.get_random_number()
-        self.prepare_for_track()
+        self.start()
 
     def turn_off(self):
-        print('turn off')
+        self.open_hubstaff()
+        time.sleep(1)
+        pyautogui.hotkey('ctrl', 'esc')
+        time.sleep(1)
+        os.system('systemctl suspend')
+        time.sleep(1)
+        os._exit(0)
 
     @staticmethod
     def get_random_number():
@@ -108,4 +113,14 @@ class Tracker:
     @staticmethod
     def open_project_window():
         # open project window
-        pyautogui.hotkey('alt', '1')
+        pyautogui.hotkey('alt', '1')\
+
+    @staticmethod
+    def open_php_storm():
+        # open project window
+        subprocess.Popen(['/snap/phpstorm/179/bin/phpstorm.sh', '/home/home/projects/mzadqatar-web/composer.json'])\
+
+    @staticmethod
+    def open_hubstaff():
+        # open project window
+        subprocess.Popen(['/home/home/Hubstaff/HubstaffClient.bin.x86_64'])
