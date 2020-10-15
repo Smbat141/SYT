@@ -41,7 +41,7 @@ with shelve.open('database') as db:
 
     if db.get('storm_path', False) and (False if argument_value == 'storm_path' else True):
         print(f"storm_path is a{bcolors.OKGREEN} {db['storm_path']}{bcolors.ENDC} \U0001F44D")
-    elif argument_value == 'storm_path':
+    else:
         storm_path = input('set phpstorm starting file path (phpstorm.sh or phpstorm.bat) - ')
         db['storm_path'] = storm_path
 
