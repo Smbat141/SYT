@@ -4,16 +4,26 @@ import random
 import time
 import os
 import subprocess
+import shelve
+
 from datetime import datetime, timedelta
-from pynput.mouse import Listener, Button, Controller
+from pynput.mouse import Button, Controller
 
 mouse = Controller()
+
 
 
 class Tracker:
 
     def __init__(self):
         self.random_number = self.get_random_number()
+
+        with shelve.open('database') as db:
+            self.storm_path = db['storm_path']
+            self.default_opening_file_path = db['storm_default_opening_file_path']
+            self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
+            self.sleep_command = db['sleep_command']
+
 
     def track(self):
         start_time = datetime.now()
@@ -71,9 +81,18 @@ class Tracker:
         time.sleep(1)
         pyautogui.hotkey('ctrl', 'esc')
         time.sleep(1)
-        os.system('systemctl suspend')
+        os.system(self.sleep_command)
         time.sleep(1)
         os._exit(0)
+
+    def open_php_storm(self):
+        # open project window
+        subprocess.Popen([self.storm_path, self.default_opening_file_path])
+
+    def open_hubstaff(self):
+        # open project window
+        subprocess.Popen([self.tracker_app_starting_file_path])
+
 
     @staticmethod
     def get_random_number():
@@ -115,12 +134,5 @@ class Tracker:
         # open project window
         pyautogui.hotkey('alt', '1')\
 
-    @staticmethod
-    def open_php_storm():
-        # open project window
-        subprocess.Popen(['/snap/phpstorm/179/bin/phpstorm.sh', '/home/home/projects/mzadqatar-web/composer.json'])\
 
-    @staticmethod
-    def open_hubstaff():
-        # open project window
-        subprocess.Popen(['/home/home/Hubstaff/HubstaffClient.bin.x86_64'])
+
