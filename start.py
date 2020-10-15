@@ -1,8 +1,5 @@
 # set permissions for desktop
 # xhost +
-# mouse cordinates
-# (56, 818)
-# (537, 778)
 
 
 import threading
@@ -20,17 +17,27 @@ import shelve
 from tracker import Tracker
 from bcolors import bcolors
 
-# print(sys.argv[1][:8])
-with shelve.open('database') as db:
-    argument_value = ''
+argument_value = ''
+end = False
+if len(sys.argv) > 1:
+    if sys.argv[1][:9] == '--update=':
+        argument_value = sys.argv[1][9:]
+    elif sys.argv[1][:6] == '--end=':
+        end = sys.argv[1][6:]
 
-    if len(sys.argv) > 1:
-        print('have args')
-        if sys.argv[1][:9] == '--update=':
-            argument_value = sys.argv[1][9:]
-            print(argument_value)
+        if end.isdigit():
+            end = int(end)
         else:
-            print('False')
+            print('Invalid argument value')
+            exit()
+    else:
+        print('option is not exist')
+        exit()
+
+with shelve.open('database') as db:
+
+    if argument_value != '' and argument_value not in db.keys():
+        print('Invalid argument value')
 
     if db.get('storm_path', False) and (False if argument_value == 'storm_path' else True):
         print(f"storm_path is a{bcolors.OKGREEN} {db['storm_path']}{bcolors.ENDC} \U0001F44D")
@@ -68,5 +75,5 @@ with shelve.open('database') as db:
     print('Cool! \U0001F60E')
     print(f'{bcolors.FAIL}if You want to update path use --update=<variable_name> option{bcolors.ENDC}')
 
-x = Tracker()
-x.start(1)
+syt = Tracker()
+syt.start(end)

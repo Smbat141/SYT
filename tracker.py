@@ -12,7 +12,6 @@ from pynput.mouse import Button, Controller
 mouse = Controller()
 
 
-
 class Tracker:
 
     def __init__(self):
@@ -23,7 +22,6 @@ class Tracker:
             self.default_opening_file_path = db['storm_default_opening_file_path']
             self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
             self.sleep_command = db['sleep_command']
-
 
     def track(self):
         start_time = datetime.now()
@@ -49,13 +47,12 @@ class Tracker:
             self.wait_and_restart(start_after_this_seconds)
 
     def prepare_for_track(self):
-        time.sleep(1)
         self.change_tab()
-        time.sleep(1)
+        time.sleep(2)
         self.mouse_click(700, 450)
-        time.sleep(1)
+        time.sleep(2)
         self.random_mouse_scroll()
-        time.sleep(1)
+        time.sleep(2)
         self.open_git_window()
         time.sleep(1)
         self.track()
@@ -66,9 +63,9 @@ class Tracker:
             threading.Timer(time_for_tracer_sleep * 60, self.turn_off).start()
 
         self.open_php_storm()
-        time.sleep(1)
+        time.sleep(2)
         self.mouse_click(700, 450)
-        time.sleep(1)
+        time.sleep(2)
         self.prepare_for_track()
 
     def wait_and_restart(self, seconds):
@@ -92,7 +89,6 @@ class Tracker:
     def open_hubstaff(self):
         # open project window
         subprocess.Popen([self.tracker_app_starting_file_path])
-
 
     @staticmethod
     def get_random_number():
@@ -132,7 +128,4 @@ class Tracker:
     @staticmethod
     def open_project_window():
         # open project window
-        pyautogui.hotkey('alt', '1')\
-
-
-
+        pyautogui.hotkey('alt', '1')
