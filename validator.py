@@ -1,5 +1,6 @@
 import sys
 import shelve
+import psutil
 from bcolors import bcolors
 
 
@@ -69,4 +70,15 @@ class ValidateLinux:
                 db['sleep_command'] = sleep_command
 
             print('Cool! \U0001F60E')
-            print(f'{bcolors.FAIL}if You want to update path use --update=<variable_name> option{bcolors.ENDC}')
+
+    @staticmethod
+    def tracker_is_running():
+        its_running = False
+        for proc in psutil.process_iter():
+            try:
+                if 'hubstaff' in proc.exe() or 'Hubstaff' in proc.exe():
+                    its_running = True
+            except psutil.AccessDenied:
+                pass
+
+        return its_running

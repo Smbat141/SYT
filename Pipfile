@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 pyautogui = "*"
 pynput = "*"
+psutil = "*"
 
 [requires]
 python_version = "3.6"

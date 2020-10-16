@@ -21,6 +21,10 @@ from validator import ValidateLinux
 validate_linux = ValidateLinux()
 validate_linux.check_paths()
 
-# syt = Tracker()
-# syt.start(validate_linux.end)
+if validate_linux.tracker_is_running():
+    syt = Tracker()
+    syt.start(validate_linux.end)
+else:
+    print(f'{bcolors.FAIL}Please make sure tracker its running{bcolors.ENDC}')
+
 
