@@ -1,8 +1,10 @@
-import threading
-import pyautogui
 import random
 import time
 import os
+import sys
+
+import threading
+import pyautogui
 import subprocess
 import shelve
 
@@ -10,6 +12,7 @@ from datetime import datetime, timedelta
 from pynput.mouse import Button, Controller
 
 mouse = Controller()
+pyautogui.FAILSAFE = False
 
 
 class Tracker:
@@ -18,10 +21,17 @@ class Tracker:
         self.random_number = self.get_random_number()
 
         with shelve.open('database') as db:
-            self.storm_path = db['storm_path']
-            self.default_opening_file_path = db['storm_default_opening_file_path']
-            self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
-            self.sleep_command = db['sleep_command']
+
+            self.storm_middle_coordinates = db['storm_middle_coordinates']
+
+            if sys.platform == 'linux':
+                self.storm_path = db['storm_path']
+                self.default_opening_file_path = db['storm_default_opening_file_path']
+                self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
+                self.sleep_command = db['sleep_command']
+            else:
+                self.storm_coordinates = db['storm_coordinates']
+                self.tracker_app_coordinates = db['tracker_app_coordinates']
 
     def track(self):
         start_time = datetime.now()
@@ -47,9 +57,10 @@ class Tracker:
             self.wait_and_restart(start_after_this_seconds)
 
     def prepare_for_track(self):
+        time.sleep(2)
         self.change_tab()
         time.sleep(2)
-        self.mouse_click(700, 450)
+        self.mouse_click(*self.storm_middle_coordinates)
         time.sleep(2)
         self.random_mouse_scroll()
         time.sleep(2)
@@ -63,7 +74,7 @@ class Tracker:
             threading.Timer(time_for_tracer_sleep * 60, self.turn_off).start()
 
         self.open_php_storm()
-        time.sleep(2)
+        time.sleep(3)
         self.mouse_click(700, 450)
         time.sleep(2)
         self.prepare_for_track()
@@ -74,7 +85,7 @@ class Tracker:
         self.start()
 
     def turn_off(self):
-        self.open_hubstaff()
+        self.open_tracker()
         time.sleep(1)
         pyautogui.hotkey('ctrl', 'esc')
         time.sleep(1)
@@ -84,11 +95,17 @@ class Tracker:
 
     def open_php_storm(self):
         # open project window
-        subprocess.Popen([self.storm_path, self.default_opening_file_path])
-
-    def open_hubstaff(self):
-        # open project window
-        subprocess.Popen([self.tracker_app_starting_file_path])
+        if sys.platform == 'linux':
+            subprocess.Popen([self.storm_path, self.default_opening_file_path])
+        else:
+            self.mouse_click(*self.storm_middle_coordinates)
+    
+    def open_tracker(self):
+        # open tracker window
+        if sys.platform == 'linux':
+            subprocess.Popen([self.tracker_app_starting_file_path])
+        else:
+            self.mouse_click(*self.tracker_app_coordinates)
 
     @staticmethod
     def get_random_number():
