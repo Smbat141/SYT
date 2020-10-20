@@ -75,14 +75,15 @@ class Tracker:
 
         self.open_php_storm()
         time.sleep(3)
-        self.mouse_click(700, 450)
-        time.sleep(2)
         self.prepare_for_track()
 
     def wait_and_restart(self, seconds):
         time.sleep(seconds)
         self.random_number = self.get_random_number()
-        self.start()
+        if sys.platform == 'linux':
+            self.start()
+        else:
+            self.prepare_for_track()
 
     def turn_off(self):
         self.open_tracker()
@@ -98,7 +99,7 @@ class Tracker:
         if sys.platform == 'linux':
             subprocess.Popen([self.storm_path, self.default_opening_file_path])
         else:
-            self.mouse_click(*self.storm_middle_coordinates)
+            self.mouse_click(*self.storm_coordinates)
     
     def open_tracker(self):
         # open tracker window
@@ -106,6 +107,15 @@ class Tracker:
             subprocess.Popen([self.tracker_app_starting_file_path])
         else:
             self.mouse_click(*self.tracker_app_coordinates)
+
+    def open_git_window(self):
+        self.mouse_click(*self.storm_middle_coordinates)
+        time.sleep(1)
+        # open git window
+        pyautogui.hotkey('alt', '9')
+        time.sleep(1)
+        # select input for typing
+        pyautogui.hotkey('ctrl', 'l')
 
     @staticmethod
     def get_random_number():
@@ -134,13 +144,6 @@ class Tracker:
             pyautogui.press('tab')
         pyautogui.keyUp('ctrl')
 
-    @staticmethod
-    def open_git_window():
-        # open git window
-        pyautogui.hotkey('alt', '9')
-        time.sleep(1)
-        # select input for typing
-        pyautogui.hotkey('ctrl', 'l')
 
     @staticmethod
     def open_project_window():

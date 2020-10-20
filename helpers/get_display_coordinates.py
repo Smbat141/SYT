@@ -2,7 +2,6 @@ import threading
 import pyautogui
 import random
 from pynput.mouse import Listener, Button, Controller
-from tracker import Tracker
 
 mouse = Controller()
 
