@@ -88,7 +88,7 @@ class Tracker:
     def turn_off(self):
         self.open_tracker()
         time.sleep(1)
-        pyautogui.hotkey('shift', 'esc')
+        pyautogui.press('esc')
         time.sleep(1)
         os.system(self.sleep_command)
         time.sleep(1)
