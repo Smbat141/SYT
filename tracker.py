@@ -23,12 +23,12 @@ class Tracker:
         with shelve.open('database') as db:
 
             self.storm_middle_coordinates = db['storm_middle_coordinates']
+            self.sleep_command = db['sleep_command']
 
             if sys.platform == 'linux':
                 self.storm_path = db['storm_path']
                 self.default_opening_file_path = db['storm_default_opening_file_path']
                 self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
-                self.sleep_command = db['sleep_command']
             else:
                 self.storm_coordinates = db['storm_coordinates']
                 self.tracker_app_coordinates = db['tracker_app_coordinates']
@@ -88,7 +88,7 @@ class Tracker:
     def turn_off(self):
         self.open_tracker()
         time.sleep(1)
-        pyautogui.hotkey('ctrl', 'esc')
+        pyautogui.hotkey('shift', 'esc')
         time.sleep(1)
         os.system(self.sleep_command)
         time.sleep(1)
