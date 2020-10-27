@@ -140,8 +140,9 @@ class Tracker:
         print(f'start in {str(datetime.now())}')
         # select random tab
         pyautogui.keyDown('ctrl')
-        for i in range(0, random.choice([8, 7, 6, 5, 7, 3, 4, 6, 8])):
-            pyautogui.press('tab')
+        pyautogui.press('tab')
+        for i in range(0, random.randint(1, 20)):
+            pyautogui.press('down')
         pyautogui.keyUp('ctrl')
 
 

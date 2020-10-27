@@ -33,3 +33,17 @@ if validator.tracker_is_running():
 else:
     print(f'{bcolors.FAIL}Please make sure tracker its running{bcolors.ENDC}')
 
+
+# mouse = Controller()
+# mouse.position = (800, 600)
+# mouse.press(Button.left)
+# mouse.release(Button.left)
+# time.sleep(1)
+# print(f'start in {str(datetime.now())}')
+# # select random tab
+# pyautogui.keyDown('ctrl')
+# pyautogui.press('tab')
+# for i in range(0, random.randint(1, 20)):
+#     pyautogui.press('down')
+# pyautogui.keyUp('ctrl')
+
