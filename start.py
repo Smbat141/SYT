@@ -42,7 +42,6 @@ def on_press(key):
     key_to_str = str(key)
 
     if key_to_str == "'s'":
-        print(4444)
         if sys.platform == 'linux':
             validator = ValidateLinux()
             validator.check_paths()
