@@ -55,7 +55,7 @@ class Tracker:
 
             start_after_this_seconds = rounded_restart_datetime.timestamp() - datetime.now().timestamp()
 
-            self.wait_and_restart(start_after_this_seconds)
+            threading.Timer(start_after_this_seconds, self.wait_and_restart).start()
 
     def prepare_for_track(self):
         time.sleep(2)
@@ -69,17 +69,16 @@ class Tracker:
         time.sleep(1)
         self.track()
 
-    def start(self, time_for_tracer_sleep=False):
+    def start(self, time_for_tracker_sleep=False):
 
-        if time_for_tracer_sleep:
-            threading.Timer(time_for_tracer_sleep * 60, self.turn_off).start()
+        if time_for_tracker_sleep:
+            threading.Timer(time_for_tracker_sleep * 60, self.turn_off).start()
 
         self.open_php_storm()
         time.sleep(3)
         self.prepare_for_track()
 
-    def wait_and_restart(self, seconds):
-        time.sleep(seconds)
+    def wait_and_restart(self):
         self.random_number = self.get_random_number()
         if sys.platform == 'linux':
             self.start()
