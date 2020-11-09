@@ -43,3 +43,26 @@ import dis
 # l.acquire()
 # print("acquired lock twice")
 
+# def guess_number(beg, end):
+#     low = beg
+#     high = end
+#     while low <= high:
+#         mid = (low + high) // 2
+#         print(mid)
+#         pose = int(input())
+#         if pose == "yes":
+#             print("great, we are done")
+#             return True
+#         if pose == -1:
+#             print("low")
+#             high = mid - 1
+#         elif pose == 1:
+#             print("high")
+#             low = mid + 1
+#     return "something is wrong"
+#
+# guess_number(1, 100)
+
+import keyboard  # using module keyboard
+
+

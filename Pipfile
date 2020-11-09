@@ -9,6 +9,7 @@ verify_ssl = true
 pyautogui = "*"
 pynput = "*"
 psutil = "*"
+keyboard = "*"
 
 [requires]
 python_version = "3.6"

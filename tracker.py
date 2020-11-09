@@ -7,6 +7,7 @@ import threading
 import pyautogui
 import subprocess
 import shelve
+import psutil
 
 from datetime import datetime, timedelta
 from pynput.mouse import Button, Controller
@@ -86,9 +87,7 @@ class Tracker:
             self.prepare_for_track()
 
     def turn_off(self):
-        self.open_tracker()
-        time.sleep(1)
-        pyautogui.press('esc')
+        self.kill_tracker_process()
         time.sleep(1)
         os.system(self.sleep_command)
         time.sleep(1)
@@ -101,12 +100,19 @@ class Tracker:
         else:
             self.mouse_click(*self.storm_coordinates)
     
-    def open_tracker(self):
-        # open tracker window
-        if sys.platform == 'linux':
-            subprocess.Popen([self.tracker_app_starting_file_path])
-        else:
-            self.mouse_click(*self.tracker_app_coordinates)
+    @staticmethod
+    def kill_tracker_process():
+        # find and kill process
+        its_running = False
+        for proc in psutil.process_iter():
+            try:
+                if 'hubstaff' in proc.exe() or 'Hubstaff' in proc.exe():
+                    proc.kill()
+                    its_running = True
+            except psutil.AccessDenied:
+                pass
+        if not its_running:
+            os.system("systemctl poweroff")
 
     def open_git_window(self):
         self.mouse_click(*self.storm_middle_coordinates)
