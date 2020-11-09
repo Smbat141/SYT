@@ -18,7 +18,6 @@ import shelve
 from tracker import Tracker
 from bcolors import bcolors
 from validator import ValidateLinux, ValidateWindows
-import keyboard
 
 # mouse = Controller()
 # mouse.position = (800, 600)
