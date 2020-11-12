@@ -41,8 +41,17 @@ class Tracker:
         space_pressing_time = random.choice(
             [00.1, 00.9, 00.9, 00.9, 00.1, 00.2, 00.9, 00.3, 00.4, 00.9, 00.5, 00.9, 00.8])
 
+        operations = ['click', 'space']
+
+        operation = random.choice(operations)
+
         if start_time.minute % 10 < self.random_number:
-            pyautogui.press('space')
+            self.open_git_window()
+            if operation == 'space':
+                pyautogui.press('space')
+            else:
+                self.mouse_click(*self.storm_middle_coordinates)
+
             threading.Timer(space_pressing_time, self.track).start()
         else:
             minutes_left = 10 - (start_time.minute % 10)
