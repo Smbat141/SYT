@@ -10,7 +10,6 @@ class Validator():
 
     def __init__(self):
         self.db = shelve.open('database')
-
         self.argument_value = False
         self.end = False
 
@@ -51,81 +50,20 @@ class Validator():
         return its_running
 
 
-class ValidateLinux(Validator):
-
-    def __init__(self):
-        super().__init__()
-
-    def check_paths(self):
-        if self.argument_value and self.argument_value not in self.db.keys():
-            print('Invalid argument value')
-            exit()
-
-        if self.db.get('storm_path', False) and (False if self.argument_value == 'storm_path' else True):
-            print(f"storm_path is a{bcolors.OKGREEN} {self.db['storm_path']}{bcolors.ENDC} \U0001F44D")
-        else:
-            storm_path = input('set phpstorm starting file path (phpstorm.sh or phpstorm.bat) - ')
-            self.db['storm_path'] = storm_path
-
-        if self.db.get('storm_default_opening_file_path', False) and (
-                False if self.argument_value == 'storm_default_opening_file_path' else True):
-            print(
-                f"storm_default_opening_file_path is a{bcolors.OKGREEN} {self.db['storm_default_opening_file_path']}{bcolors.ENDC} \U0001F44D")
-        else:
-            default_opening_file_path_text = "set the path to the project file you need to open every time\n" \
-                                             "for example /home/home/projects/my_project/composer.json - "
-
-            default_opening_file_path = input(default_opening_file_path_text)
-            self.db['storm_default_opening_file_path'] = default_opening_file_path
-
-        if self.db.get('tracker_app_starting_file_path', False) and (
-                False if self.argument_value == 'tracker_app_starting_file_path' else True):
-            print(
-                f"tracker_app_starting_file_path is a{bcolors.OKGREEN} {self.db['tracker_app_starting_file_path']}{bcolors.ENDC} \U0001F44D")
-        else:
-            tracker_app_starting_file_path_text = "set the path to the tracker file you need to close when finished\n" \
-                                                  "for example in Linux Ubuntu " \
-                                                  "/home/home/Hubstaff/HubstaffClient.bin.x86_64 - "
-
-            tracker_app_starting_file_path = input(tracker_app_starting_file_path_text)
-
-            self.db['tracker_app_starting_file_path'] = tracker_app_starting_file_path
-
-        if self.db.get('storm_middle_coordinates', False) and (
-        False if self.argument_value == 'storm_middle_coordinates' else True):
-            print(
-                f"storm_middle_coordinates is a{bcolors.OKGREEN} {self.db['storm_middle_coordinates'][0]} and {self.db['storm_middle_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
-        else:
-            print('Please click in middle of PhpStorm')
-            with Listener(on_click=self.set_storm_middle_coordinates) as listener:
-                listener.join()
-                time.sleep(1)
-            print('PhpStorm middle coordinates saved successfully \U0001F44D')
-
-        if self.db.get('sleep_command', False) and (False if self.argument_value == 'sleep_command' else True):
-            print(f"sleep_command is a{bcolors.OKGREEN} {self.db['sleep_command']}{bcolors.ENDC} \U0001F44D")
-
-        else:
-            sleep_command = input('set sleep command - ')
-            self.db['sleep_command'] = sleep_command
-
-        print('Cool! \U0001F60E')
-        self.db.close()
-
-
 class ValidateWindows(Validator):
 
     def __init__(self):
+
         super().__init__()
 
     def check_click_coordinates(self):
 
-        def set_storm_coordinates(x, y, button, pressed):
-            self.db['storm_coordinates'] = [x, y]
+        def set_sublime_coordinates(x, y, button, pressed):
+            self.db['sublime_coordinates'] = [x, y]
             return False
 
-        def set_storm_middle_coordinates(x, y, button, pressed):
-            self.db['storm_middle_coordinates'] = [x, y]
+        def set_sublime_middle_coordinates(x, y, button, pressed):
+            self.db['sublime_middle_coordinates'] = [x, y]
             return False
 
         def set_tracker_app_coordinates(x, y, button, pressed):
@@ -136,23 +74,23 @@ class ValidateWindows(Validator):
             print('Invalid argument value')
             exit()
 
-        if self.db.get('storm_coordinates', False) and (False if self.argument_value == 'storm_coordinates' else True):
+        if self.db.get('sublime_coordinates', False) and (False if self.argument_value == 'sublime_coordinates' else True):
             print(
-                f"storm_coordinates is a{bcolors.OKGREEN} {self.db['storm_coordinates'][0]} and {self.db['storm_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
+                f"sublime_coordinates is a{bcolors.OKGREEN} {self.db['sublime_coordinates'][0]} and {self.db['sublime_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
         else:
-            print('Please click in PhpStorm Icon')
-            with Listener(on_click=set_storm_coordinates) as listener:
+            print('Please click in Sublime Icon')
+            with Listener(on_click=set_sublime_coordinates) as listener:
                 listener.join()
                 time.sleep(1)
-            print('PhpStorm icon coordinates saved successfully \U0001F44D')
+            print('Sublime icon coordinates saved successfully \U0001F44D')
 
-        if self.db.get('storm_middle_coordinates', False) and (
-        False if self.argument_value == 'storm_middle_coordinates' else True):
+        if self.db.get('sublime_middle_coordinates', False) and (
+        False if self.argument_value == 'sublime_middle_coordinates' else True):
             print(
-                f"storm_middle_coordinates is a{bcolors.OKGREEN} {self.db['storm_middle_coordinates'][0]} and {self.db['storm_middle_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
+                f"sublime_middle_coordinates is a{bcolors.OKGREEN} {self.db['sublime_middle_coordinates'][0]} and {self.db['sublime_middle_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
         else:
             print('Please click in middle of PhpStorm')
-            with Listener(on_click=set_storm_middle_coordinates) as listener:
+            with Listener(on_click=set_sublime_middle_coordinates) as listener:
                 listener.join()
                 time.sleep(1)
             print('PhpStorm middle coordinates saved successfully \U0001F44D')

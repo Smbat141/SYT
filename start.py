@@ -17,7 +17,7 @@ import subprocess
 import shelve
 from tracker import Tracker
 from bcolors import bcolors
-from validator import ValidateLinux, ValidateWindows
+from validator import  ValidateWindows
 
 # mouse = Controller()
 # mouse.position = (800, 600)
@@ -41,12 +41,9 @@ def on_press(key):
     key_to_str = str(key)
 
     if key_to_str == "'s'":
-        if sys.platform == 'linux':
-            validator = ValidateLinux()
-            validator.check_paths()
-        else:
-            validator = ValidateWindows()
-            validator.check_click_coordinates()
+
+        validator = ValidateWindows()
+        validator.check_click_coordinates()
 
         if validator.tracker_is_running():
             syt = Tracker()
