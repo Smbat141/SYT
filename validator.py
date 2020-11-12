@@ -89,11 +89,11 @@ class ValidateWindows(Validator):
             print(
                 f"sublime_middle_coordinates is a{bcolors.OKGREEN} {self.db['sublime_middle_coordinates'][0]} and {self.db['sublime_middle_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
         else:
-            print('Please click in middle of PhpStorm')
+            print('Please click in middle of Sublime')
             with Listener(on_click=set_sublime_middle_coordinates) as listener:
                 listener.join()
                 time.sleep(1)
-            print('PhpStorm middle coordinates saved successfully \U0001F44D')
+            print('Sublime middle coordinates saved successfully \U0001F44D')
 
         if self.db.get('tracker_app_coordinates', False) and (
         False if self.argument_value == 'tracker_app_coordinates' else True):
