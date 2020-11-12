@@ -41,11 +41,9 @@ class Tracker:
         if start_time.minute % 10 < self.random_number:
             self.open_search_window()
             if operation == 'space':
-                print('space press')
                 pyautogui.press('space')
             else:
                 self.mouse_click(*self.sublime_middle_coordinates)
-                print('click event fired')
 
             threading.Timer(space_pressing_time, self.track).start()
         else:
