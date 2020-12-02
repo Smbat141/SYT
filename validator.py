@@ -65,7 +65,7 @@ class ValidateLinux(Validator):
             print(f"storm_path is a{bcolors.OKGREEN} {self.db['storm_path']}{bcolors.ENDC} \U0001F44D")
         else:
             storm_path = input('set phpstorm starting file path (phpstorm.sh or phpstorm.bat) - ')
-            self.db['storm_path'] = storm_path
+            self.db['storm_path'] = storm_path.strip()
 
         if self.db.get('storm_default_opening_file_path', False) and (
                 False if self.argument_value == 'storm_default_opening_file_path' else True):
@@ -76,7 +76,7 @@ class ValidateLinux(Validator):
                                              "for example /home/home/projects/my_project/composer.json - "
 
             default_opening_file_path = input(default_opening_file_path_text)
-            self.db['storm_default_opening_file_path'] = default_opening_file_path
+            self.db['storm_default_opening_file_path'] = default_opening_file_path.strip()
 
         if self.db.get('tracker_app_starting_file_path', False) and (
                 False if self.argument_value == 'tracker_app_starting_file_path' else True):
@@ -89,7 +89,7 @@ class ValidateLinux(Validator):
 
             tracker_app_starting_file_path = input(tracker_app_starting_file_path_text)
 
-            self.db['tracker_app_starting_file_path'] = tracker_app_starting_file_path
+            self.db['tracker_app_starting_file_path'] = tracker_app_starting_file_path.strip()
 
         if self.db.get('storm_middle_coordinates', False) and (
         False if self.argument_value == 'storm_middle_coordinates' else True):
@@ -107,7 +107,7 @@ class ValidateLinux(Validator):
 
         else:
             sleep_command = input('set sleep command - ')
-            self.db['sleep_command'] = sleep_command
+            self.db['sleep_command'] = sleep_command.strip()
 
         print('Cool! \U0001F60E')
         self.db.close()
