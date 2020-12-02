@@ -111,7 +111,7 @@ class ValidateWindows(Validator):
 
         else:
             sleep_command = input('set sleep command - ')
-            self.db['sleep_command'] = sleep_command
+            self.db['sleep_command'] = sleep_command.strip()
 
         print('Cool! \U0001F60E')
         self.db.close()
