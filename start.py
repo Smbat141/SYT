@@ -34,13 +34,12 @@ from validator import ValidateLinux, ValidateWindows
 
 from pynput.keyboard import Key, Listener
 
-print('Please press <s> for start or <q> for finish')
+print('Please press <Space> for start or <q> for finish')
 
 
 def on_press(key):
     key_to_str = str(key)
-
-    if key_to_str == "'s'":
+    if key_to_str == 'Key.space':
         if sys.platform == 'linux':
             validator = ValidateLinux()
             validator.check_paths()

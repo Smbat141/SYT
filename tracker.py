@@ -27,8 +27,7 @@ class Tracker:
             self.sleep_command = db['sleep_command']
 
             if sys.platform == 'linux':
-                self.storm_path = db['storm_path']
-                self.default_opening_file_path = db['storm_default_opening_file_path']
+                self.app_name = db['app_name']
                 self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
             else:
                 self.storm_coordinates = db['storm_coordinates']
@@ -104,7 +103,8 @@ class Tracker:
     def open_php_storm(self):
         # open project window
         if sys.platform == 'linux':
-            subprocess.Popen([self.storm_path, self.default_opening_file_path])
+            command = f'xdotool search --desktop 0 "{self.app_name}" windowactivate'
+            os.system(command)
         else:
             self.mouse_click(*self.storm_coordinates)
     

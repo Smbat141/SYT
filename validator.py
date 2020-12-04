@@ -61,22 +61,11 @@ class ValidateLinux(Validator):
             print('Invalid argument value')
             exit()
 
-        if self.db.get('storm_path', False) and (False if self.argument_value == 'storm_path' else True):
-            print(f"storm_path is a{bcolors.OKGREEN} {self.db['storm_path']}{bcolors.ENDC} \U0001F44D")
+        if self.db.get('app_name', False) and (False if self.argument_value == 'app_name' else True):
+            print(f"app_name is a{bcolors.OKGREEN} {self.db['app_name']}{bcolors.ENDC} \U0001F44D")
         else:
-            storm_path = input('set phpstorm starting file path (phpstorm.sh or phpstorm.bat) - ')
-            self.db['storm_path'] = storm_path.strip()
-
-        if self.db.get('storm_default_opening_file_path', False) and (
-                False if self.argument_value == 'storm_default_opening_file_path' else True):
-            print(
-                f"storm_default_opening_file_path is a{bcolors.OKGREEN} {self.db['storm_default_opening_file_path']}{bcolors.ENDC} \U0001F44D")
-        else:
-            default_opening_file_path_text = "set the path to the project file you need to open every time\n" \
-                                             "for example /home/home/projects/my_project/composer.json - "
-
-            default_opening_file_path = input(default_opening_file_path_text)
-            self.db['storm_default_opening_file_path'] = default_opening_file_path.strip()
+            app_name = input('set app name (phpstorm or sublime_text)-')
+            self.db['app_name'] = app_name.strip()
 
         if self.db.get('tracker_app_starting_file_path', False) and (
                 False if self.argument_value == 'tracker_app_starting_file_path' else True):
