@@ -40,7 +40,7 @@ class Tracker:
         space_pressing_time = random.choice(
             [00.1, 00.9, 00.9, 00.9, 00.1, 00.2, 00.9, 00.3, 00.4, 00.9, 00.5, 00.9, 00.8])
 
-        operations = ['click', 'space']
+        operations = ['click', 'space', 'scroll']
 
         operation = random.choice(operations)
 
@@ -48,6 +48,9 @@ class Tracker:
             self.open_git_window()
             if operation == 'space':
                 pyautogui.press('space')
+            elif operation == 'scroll':
+                self.mouse_click(*self.storm_middle_coordinates)
+                self.random_mouse_scroll()
             else:
                 self.mouse_click(*self.storm_middle_coordinates)
 
@@ -66,13 +69,13 @@ class Tracker:
             threading.Timer(start_after_this_seconds, self.wait_and_restart).start()
 
     def prepare_for_track(self):
-        time.sleep(2)
+        time.sleep(1)
         self.change_tab()
-        time.sleep(2)
+        time.sleep(1)
         self.mouse_click(*self.storm_middle_coordinates)
-        time.sleep(2)
+        time.sleep(1)
         self.random_mouse_scroll()
-        time.sleep(2)
+        time.sleep(1)
         self.open_git_window()
         time.sleep(1)
         self.track()
@@ -83,7 +86,7 @@ class Tracker:
             threading.Timer(time_for_tracker_sleep * 60, self.turn_off).start()
 
         self.open_php_storm()
-        time.sleep(3)
+        time.sleep(1)
         self.prepare_for_track()
 
     def wait_and_restart(self):
