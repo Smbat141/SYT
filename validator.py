@@ -67,19 +67,6 @@ class ValidateLinux(Validator):
             app_name = input('set app name (phpstorm or sublime_text)-')
             self.db['app_name'] = app_name.strip()
 
-        if self.db.get('tracker_app_starting_file_path', False) and (
-                False if self.argument_value == 'tracker_app_starting_file_path' else True):
-            print(
-                f"tracker_app_starting_file_path is a{bcolors.OKGREEN} {self.db['tracker_app_starting_file_path']}{bcolors.ENDC} \U0001F44D")
-        else:
-            tracker_app_starting_file_path_text = "set the path to the tracker file you need to close when finished\n" \
-                                                  "for example in Linux Ubuntu " \
-                                                  "/home/home/Hubstaff/HubstaffClient.bin.x86_64 - "
-
-            tracker_app_starting_file_path = input(tracker_app_starting_file_path_text)
-
-            self.db['tracker_app_starting_file_path'] = tracker_app_starting_file_path.strip()
-
         if self.db.get('storm_middle_coordinates', False) and (
         False if self.argument_value == 'storm_middle_coordinates' else True):
             print(
@@ -146,16 +133,6 @@ class ValidateWindows(Validator):
                 time.sleep(1)
             print('PhpStorm middle coordinates saved successfully \U0001F44D')
 
-        if self.db.get('tracker_app_coordinates', False) and (
-        False if self.argument_value == 'tracker_app_coordinates' else True):
-            print(
-                f"tracker_app_coordinates is a{bcolors.OKGREEN} {self.db['tracker_app_coordinates'][0]} and {self.db['tracker_app_coordinates'][1]}{bcolors.ENDC} \U0001F44D")
-        else:
-            print('Please click in Tracking app icon')
-            with Listener(on_click=set_tracker_app_coordinates) as listener:
-                listener.join()
-                time.sleep(1)
-            print('Tracking app coordinates saved successfully \U0001F44D')
 
         if self.db.get('sleep_command', False) and (False if self.argument_value == 'sleep_command' else True):
             print(f"sleep_command is a{bcolors.OKGREEN} {self.db['sleep_command']}{bcolors.ENDC} \U0001F44D")

@@ -28,10 +28,8 @@ class Tracker:
 
             if sys.platform == 'linux':
                 self.app_name = db['app_name']
-                self.tracker_app_starting_file_path = db['tracker_app_starting_file_path']
             else:
                 self.storm_coordinates = db['storm_coordinates']
-                self.tracker_app_coordinates = db['tracker_app_coordinates']
 
     def track(self):
         start_time = datetime.now()
@@ -45,8 +43,9 @@ class Tracker:
         operation = random.choice(operations)
 
         if start_time.minute % 10 < self.random_number:
-            self.open_git_window()
             if operation == 'space':
+                self.open_git_window()
+                time.sleep(0.5)
                 pyautogui.press('space')
             elif operation == 'scroll':
                 self.mouse_click(*self.storm_middle_coordinates)
@@ -106,8 +105,7 @@ class Tracker:
     def open_php_storm(self):
         # open project window
         if sys.platform == 'linux':
-            command = f'xdotool search --desktop 0 "{self.app_name}" windowactivate'
-            os.system(command)
+            subprocess.call(["xdotool", 'search', "--desktop", '0', self.app_name, 'windowactivate'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         else:
             self.mouse_click(*self.storm_coordinates)
     
